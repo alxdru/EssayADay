@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ead</title>
+
+
+    <style>
+
+
+        @font-face {
+            font-family: "Gotham Book";
+            src: url(Gotham Book.ttf);
+        }
+        @font-face {
+            font-family: "Gotham Bold";
+            src: url(GOTHAM-BOLD.ttf);
+        }
+        @font-face {
+            font-family: "Gotham Light";
+            src: url(GOTHAM-LIGHT.ttf);
+        }
+        @font-face {
+            font-family: "Helvetica Neue Light";
+            src: url(Helvetica-Light.ttf);
+        }
+        body {
+
+            padding: 0px;
+            margin: 0px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        p{
+            font-family: "Gotham Book";
+            font-size: 85%;
+            line-height: 25px;
+            margin-top: 30px;
+            color: #484848;
+<!--            text-align: justify;-->
+
+        }
+
+        .title{
+            font-family: "Gotham Bold";
+            color: #232323;
+<!--            text-align: justify;-->
+            margin-top: 30px;
+
+
+        }
+        .summary{
+            font-family: "Gotham Light";
+            color: #232323;
+            font-size: 95%;
+<!--            text-align: justify;-->
+            margin-top: 30px;
+ 
+
+
+        }
+        figcaption{
+            font-family: "Gotham Book";
+            color: #484848;
+        }
+        img{
+            width: 100%;
+            margin-top: 50px;
+            position: relative;
+
+        }
+        a{
+            color: #4ac1be;
+        }
+        .date{
+            font-family: "Helvetica Neue Light";
+            color: #989898;
+            font-size: 95%;
+            margin-top: 0px;
+            text-align: right;
+        }
+        .author{
+            font-family: "Helvetica Neue Light";
+            color: #818181;
+            font-size: 95%;
+            margin-top: 50px;
+            text-align: left;
+        }
+        .copyright{
+            font-family: "Helvetica Neue Light";
+            color: #989898;
+            margin-top: 50px;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 40px;
+
+        }
+
+
+        .page {
+            margin: 0px;
+            padding: 0px;
+        }
+        .header-image {
+            width: 100%;
+            margin-top: 0px;
+
+        }
+        .overlay{
+            position: absolute;
+            top: 0px;
+            z-index: 1;
+            margin-top: 0px;
+            left: 0px;
+            margin-left:0px;
+        }
+
+        .article-content {
+            padding: 30px;
+            padding-bottom: 0px;
+
+        }
+
+        .loading-bar {
+            width: 100%;
+            height: 25px;
+            background-color: white;
+            position: fixed;
+            top: -1px;
+            z-index: 4;
+        }
+        .gem {
+            left: 50%;
+            margin-left: -51px;
+            position: relative;
+        }
+        .section {
+            background-image:url('ead_dot.png');
+            background-size: cover;
+            top: 0px;
+            height: 25px;
+            width: 22px;
+            position: absolute;
+            z-index: 1;
+
+        }
+        .progress-bar {
+            background-color: #4ac1be;
+            height: 25px;
+            width: 0px;
+            top: -1px;
+            z-index: 3;
+        }
+
+    </style>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var gems = $('.gem').size();
+            var loadingBarWidth = $('.loading-bar').width();
+            var sectionWidth = loadingBarWidth/gems;
+            var sectionId = 1;
+
+            for (var i = 0; i<(gems-1);i++) {
+                var element = $('<div class="section"></div>');
+                element.css('margin-left',sectionWidth*(i+1)+'px');
+                element.attr('id','section_' + sectionId);
+                $('.loading-bar').append(element);
+                sectionId++;
+            }
+
+            var element = $('<div class="section"></div>');
+            element.attr('id','section_' + sectionId);
+            element.css('margin-left',sectionWidth*(gems) - 17+'px');
+            $('.loading-bar').append(element);
+
+            $('.gem').each(function() {
+                console.log('gem');
+            });
+
+            var gemId = 1;
+            $('.gem').each(function() {
+                $(this).attr('id','gem_' + gemId);
+                $(this).attr('gem-id',gemId);
+                gemId++;
+            });
+
+
+            $(window).scroll(function() {
+                var scrollPercentage = getScrollPercent();
+                $('.progress-bar').width(scrollPercentage*$('.loading-bar').width() / 100);
+
+            });
+
+            function getScrollPercent() {
+                var h = document.documentElement,
+                        b = document.body,
+                        st = 'scrollTop',
+                        sh = 'scrollHeight';
+
+
+                return h[st]||b[st] / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+            }
+
+
+            $('.gem').click(function() {
+                $(this).attr('src','ead_gray_gem.jpg');
+                var gemId = $(this).attr('gem-id');
+                var sectionId = 'section_' + gemId;
+                console.log(sectionId);
+                $('#' + sectionId).css('background-image','url(ead_small_gem.png)');
+
+
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="page">
+    <div>
+        <img class="header-image" src="articleImageHeader@2x.jpg"/>
+        <img class="header-image overlay" src="overlay@2x.png"/>
+    </div>
+    <div class="loading-bar">
+        <div class="progress-bar"></div>
+    </div>
+    <div class="article-content">
+
+        <!-- DYNAMIC CONTENT -->
+
+        <h5 class="date "> posted on Jul 18, 2016</h5>
+        <h3 class="title">The Racist History of Portland, the Whitest City in America</h3>
+        <h3 class = "summary">It’s known as a modern-day hub of progressivism, but its past is one of exclusion.  </h3>
+        <h5 class="author">by Alana Semuels</h5>
+
+        <section>
+            <p dir="ltr">PORTLAND, Ore.— Victor Pierce has worked on the assembly line of a Daimler Trucks North America plant here since 1994. But he says that in recent years he’s experienced things that seem straight out of another time. White co-workers have challenged him to fights, mounted “hangman’s nooses” around the factory, referred to him as “boy” on a daily basis, sabotaged his work station by hiding his tools, carved swastikas in the bathroom, and written the word “nigger” on walls in the factory, according to allegations filed in a complaint to the Multnomah County Circuit Court in February of 2015.</p>
+            <p dir="ltr">Pierce is one of six African Americans working in the Portland plant whom the lawyer Mark Morrell is representing in a series of lawsuits against Daimler Trucks North America. The cases have been combined and a trial is scheduled for January of 2017.</p>
+            <p dir="ltr">
+
+
+
+            <p dir="ltr">“They have all complained about being treated poorly because of their race,” Morrell told me. “It’s a sad story—it’s pretty ugly on the floor there.” (Daimler said it could not comment on pending litigation, but spokesman David Giroux said that the company prohibits discrimination and investigates any allegations of harassment.)</p></section><section><p dir="ltr">The allegations may seem at odds with the reputation of this city known for its progressivism. But many African Americans in Portland say they’re not surprised when they hear about racial incidents in this city and state. That’s because racism has been entrenched in Oregon, maybe more than any state in the north, for nearly two centuries. When the state entered the union in 1859, for example, Oregon explicitly forbade black people from living in its borders, the <a href="http://www.smithsonianmag.com/history/vanport-oregon-how-countrys-largest-housing-project-vanished-day-180954040/?no-ist" data-omni-click="r'article',r'link',r'0',r'492035'">only state</a> to do so. In more recent times, the city repeatedly undertook “urban renewal” projects (such as <a href="http://www.oregonlive.com/portland/index.ssf/2012/09/post_273.html" data-omni-click="r'article',r'link',r'1',r'492035'">the construction</a> of Legacy Emanuel Hospital) that decimated the small black community that existed here. And racism persists today. A <a href="http://www.oregonlive.com/portland/index.ssf/2011/05/a_portland_housing_audit_finds.html" data-omni-click="r'article',r'link',r'2',r'492035'">2011 audit</a> found that landlords and leasing agents here discriminated against black and Latino renters 64 percent of the time, citing them higher rents or deposits and adding on additional fees. In area schools, African American students are<a href="http://www.oregonlive.com/portland/index.ssf/2015/02/portland_expels_suspends_fewer.html" data-omni-click="r'article',r'link',r'3',r'492035'"> suspended</a> and expelled at a rate four to five times higher than that of their white peers.</p>
+        <img class="gem fr-dib fr-draggable" src="ead_gem.jpg" style="width: 87px; height: 120px;"></p>
+        <p dir="ltr">All in all, historians and residents say, Oregon has never been particularly welcoming to minorities. Perhaps that’s why there have never been very many. Portland is the<a href="http://priceonomics.com/how-diverse-is-your-city/" data-omni-click="r'article',r'link',r'4',r'492035'"> whitest big city</a> in America, with a population that is 72.2 percent white and only 6.3 percent African American.</p><p dir="ltr">“I think that Portland has, in many ways, perfected neoliberal racism,” Walidah Imarisha, an African American educator and expert on black history in Oregon, told me. Yes, the city is politically progressive, she said, but its government has facilitated the dominance of whites in business, housing, and culture. And white-supremacist sentiment is not uncommon in the state. Imarisha travels around Oregon teaching about black history, and she says neo-Nazis and others spewing sexually explicit comments or death threats frequently protest her events.</p><figure><picture><img alt="" data-src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/AP_120402129510/5d622795a.jpg" src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/AP_120402129510/5d622795a.jpg"></picture><figcaption>A protester at a Portland rally against the reinstatement of a police officer who shot a black man (Rick Bowmer / AP)</figcaption></figure><p dir="ltr">Violence is not the only obstacle faced by black people in Oregon. A<a href="http://static1.squarespace.com/static/5501f6d4e4b0ee23fb3097ff/t/556d3996e4b09da5e9a521df/1433221526152/African-American-report-FINAL-January-2014.pdf" data-omni-click="r'article',r'link',r'5',r'492035'"> 2014 report</a> by Portland State University and the Coalition of Communities of Color, a Portland non-profit, shows black families lag far behind whites in the Portland region in employment, health outcomes, and high-school graduation rates. They also lag behind black families nationally. While annual incomes for whites nationally and in Multnomah County, where Portland is located, were around $70,000 in 2009, blacks in Multnomah County made just $34,000, compared to $41,000 for blacks nationally. Almost two-thirds of black single mothers in Multnomah County with kids under five lived in poverty in 2010, compared to half of black single mothers with kids under five nationally. And just 32 percent of African Americans in Multnomah County owned homes in 2010, compared to 60 percent of whites in the county and 45 percent of blacks nationally.</p>
+    </section>
+        <p dir="ltr">
+            <img class="gem fr-dib fr-draggable" src="ead_gem.jpg" style="width: 87px; height: 120px;"></p>
+        <section>
+            <p dir="ltr">“Oregon has been slow to dismantle overtly racist policies,” the report concluded. As a result, “African Americans in Multnomah County continue to live with the effects of racialized policies, practices, and decision-making.”</p><p dir="ltr">Whether this history can be overcome is another matter. Because Oregon, and specifically Portland, its biggest city, are not very diverse, many white people may not even begin to think about, let alone understand, the inequalities. A <a href="http://browninpdx.tumblr.com/" data-omni-click="r'article',r'link',r'6',r'492035'">blog</a>, “Shit White People Say to Black and Brown Folks in PDX,” details how racist Portland residents can be to people of color. “Most of the people who live here in Portland have never had to directly, physically and/or emotionally interact with PoC in their life cycle,” one post begins.</p><p dir="ltr">As the city becomes<a href="//www.theatlantic.com/business/archive/2016/05/the-real-roots-of-portlands-housing-crisis/482988/" data-omni-click="r'article',r'link',r'7',r'492035'"> more popular</a> and real-estate prices rise, it is Portland’s tiny African American population that is being displaced to the far-off fringes of the city, leading to even less diversity in the city’s center. There are around 38,000 African Americans in the city in Portland, according to Lisa K. Bates of Portland State University; in recent years, 10,000 of those 38,000 have had to<a href="http://www.opb.org/radio/programs/thinkoutloud/segment/oregon-portland-african-americans/" data-omni-click="r'article',r'link',r'8',r'492035'"> move</a> from the center city to its fringes because of rising prices. The gentrification of the historically black neighborhood in central Portland, Albina, has led to conflicts between white Portlanders and long-time black residents over things like widening bicycle lanes and the construction of a new<a href="https://www.yahoo.com/news/trader-joe-39-drops-black-neighborhood-store-plan-224732374.html?ref=gs" data-omni-click="r'article',r'link',r'9',r'492035'"> Trader Joe’s</a>. And the spate of alleged incidents at Daimler Trucks is evidence of tensions that are far less subtle.</p>
+            <p dir="ltr">“Portland's tactic when it comes to race up until now, has been to ignore it,” said Zev Nicholson, an African American resident who was, until recently, the Organizing Director of the Urban League of Portland. But can it continue to do so?</p><p>* * *</p><p dir="ltr">From its very beginning, Oregon was an inhospitable place for black people. In 1844, the provisional government of the territory passed a law banning slavery, and at the same time required any African American in Oregon leave the territory. Any black person remaining would be flogged publicly every six months until he left. Five years later, another law was passed that forbade free African Americans from entering into Oregon, according to the<a href="http://static1.squarespace.com/static/5501f6d4e4b0ee23fb3097ff/t/556d3996e4b09da5e9a521df/1433221526152/African-American-report-FINAL-January-2014.pdf" data-omni-click="r'article',r'link',r'10',r'492035'"> Communities of Color</a> report.</p></section><section><p dir="ltr">In 1857, Oregon adopted a state constitution that banned black people from coming to the state, residing in the state, or holding property in the state. During this time, any white male settler could receive 650 acres of land and another 650 if he was married. This, of course, was land taken from native people who had been living here for centuries.</p><p dir="ltr">This early history proves, to Imarisha, that “the founding idea of the state was as a racist white utopia. The idea was to come to Oregon territory and build the perfect white society you dreamed of.” (Matt Novak detailed Oregon’s heritage as a white utopia in <a href="http://gizmodo.com/oregon-was-founded-as-a-racist-utopia-1539567040" data-omni-click="r'article',r'link',r'11',r'492035'">this 2015 <em>Gizmodo</em> </a>essay.)</p><p dir="ltr">With the passage of the 13th, 14th, and 15th amendments, Oregon’s laws preventing black people from living in the state and owning property were superseded by national law. But Oregon itself didn’t ratify the 14th Amendment—the Equal Protection Clause—until 1973. (Or, more exactly, the state ratified the amendment in 1866, rescinded its ratification in 1868, and then finally ratified it for good in 1973.) It didn’t ratify the 15th Amendment, which gave black people the right to vote, until 1959, making it one of only<a href="http://kingneighborhood.org/wp-content/uploads/2015/03/BLEEDING-ALBINA_-A-HISTORY-OF-COMMUNITY-DISINVESTMENT-1940%E2%80%932000.pdf" data-omni-click="r'article',r'link',r'12',r'492035'"> six states</a> that refused to ratify that amendment when it passed.</p><figure><picture><img alt="" data-src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/Joe_Meek_Champoeg_Meetings/befc564cc.jpg" src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/Joe_Meek_Champoeg_Meetings/befc564cc.jpg"></picture><figcaption>The Champoeg meetings organized early government in Oregon. (Joseph Gaston / The Centennial History of Oregon)</figcaption></figure><p dir="ltr">This history resulted in a very white state. Technically, after 1868, black people could come to Oregon. But the black-exclusion laws had sent a very clear message nationwide, says Darrell Millner, a professor of black studies at Portland State University. “What those exclusion laws did was broadcast very broadly and loudly was that Oregon wasn’t a place where blacks would be welcome or comfortable,” he told me. By 1890, there were slightly more than 1,000 black people in the whole state of Oregon. By 1920, there were about 2,000.</p><p dir="ltr">The rise of the Ku Klux Klan made Oregon even more inhospitable for black people. The state had the highest per capita Klan membership in the country, according to Imarisha. Democrat Walter M. Pierce was elected to the governorship of the state in 1922 with the vocal support of the Klan, and photos in the local paper show the Portland chief of police, sheriff, district attorney, U.S. attorney, and mayor posing with Klansmen, accompanied by an article saying the men were taking advice from the Klan. Some of the laws passed during that time included<a href="http://newsregister.com/article?articleTitle=corruption-hypocrisy-brought-down-ku-klux-klan-in-1920s--1370536750--8079--home%20column%203" data-omni-click="r'article',r'link',r'13',r'492035'"> literacy tests</a> for anyone who wanted to vote in the state and compulsory public school for Oregonians, a measure targeted at Catholics. &nbsp;&nbsp;
+    </p>
+    </section>
+        <p dir="ltr">
+            <img class="gem fr-dib fr-draggable" src="ead_gem.jpg" style="width: 87px; height: 120px;"></p>
+        <section>
+            <p dir="ltr">It wasn’t until World War II that a sizable black population moved to Oregon, lured by jobs in the shipyards, Millner said. The black population grew from 2,000 to<a href="http://southeastexaminer.com/2014/02/a-brief-history-of-african-americans-in-portland/" data-omni-click="r'article',r'link',r'14',r'492035'"> 20,000</a> during the war, and the majority of the new residents lived in a place called Vanport, a city of houses nestled between Portland and Vancouver, Washington, constructed for the new residents. Yet after the war, blacks were encouraged to leave Oregon, Millner said, with the mayor of Portland commenting in a newspaper article that black people were not welcome. The Housing Authority of Portland mulled<a href="http://www.smithsonianmag.com/history/vanport-oregon-how-countrys-largest-housing-project-vanished-day-180954040/?no-ist" data-omni-click="r'article',r'link',r'15',r'492035'"> dismantling Vanport</a>, and jobs for black people disappeared as white soldiers returned from war and displaced the men and women who had found jobs in the shipyards.</p><p dir="ltr">Dismantling Vanport proved unnecessary. In May of 1948, the Columbia River flooded, <a href="http://www.smithsonianmag.com/history/vanport-oregon-how-countrys-largest-housing-project-vanished-day-180954040/?no-ist" data-omni-click="r'article',r'link',r'16',r'492035'">wiping out</a> Vanport in a single day. Residents had been assured that the dikes protecting the housing were safe, and some lost everything in the flood. &nbsp;At least <a href="http://www.oregonencyclopedia.org/articles/vanport/#.V4kCOWQrKyA" data-omni-click="r'article',r'link',r'17',r'492035'">15 residents</a> died, though some locals formulated a <a href="http://www.smithsonianmag.com/history/vanport-oregon-how-countrys-largest-housing-project-vanished-day-180954040/" data-omni-click="r'article',r'link',r'18',r'492035'">theory</a> that the housing authority had quietly disposed of hundreds more bodies to cover up its slow response. The 18,500 residents of Vanport—6,300 of whom were black—had to find somewhere else to live.</p><figure><picture><img alt="" data-src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/AP_480530129/01ec8a879.jpg" src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/AP_480530129/01ec8a879.jpg"></picture><figcaption>Men wade through the Vanport flood in 1948 (AP photo)</figcaption></figure><p dir="ltr">For black residents, the only choice, if they wanted to stay in Portland, was a neighborhood called Albina that had emerged as a popular place to live for the black porters who worked in nearby Union Station. It was the only place black people were allowed to buy homes, after, in 1919, the Realty Board of Portland had approved a Code of Ethics forbidding realtors and bankers from selling or giving loans to minorities for properties located in white neighborhoods.</p>
+            <p dir="ltr">As black people moved into Albina, whites moved out; by the end of the 1950s, there were 23,000 fewer white residents and 7,000 more black residents than there<a href="http://kingneighborhood.org/wp-content/uploads/2015/03/BLEEDING-ALBINA_-A-HISTORY-OF-COMMUNITY-DISINVESTMENT-1940%E2%80%932000.pdf" data-omni-click="r'article',r'link',r'19',r'492035'"> had been</a> at the beginning of the decade.</p><p dir="ltr">The neighborhood of Albina began to be the center of black life in Portland. But for outsiders, it was something else: a blighted slum in need of repair.</p></section><section><p>* * *</p><p dir="ltr">Today, North Williams Avenue, which cuts through the heart of what was once Albina, is emblematic of the “new” Portland. Fancy condos with balconies line the street, next to juice stores and hipster bars with shuffleboard courts. Ed Washington remembers when this was a majority black neighborhood more than a half a century ago, when his parents moved their family to Portland during the war in order to get jobs in the shipyard. He says every house on his street, save one, was owned by black families.</p><p dir="ltr">“All these people on the streets, they used to be black people,” he told me, gesturing at a couple with sleeve tattoos, white people pushing baby strollers up the street.</p><p dir="ltr">Since the postwar population boom, Albina has been the target of a decades of “renewal” and redevelopment plans, like many <a href="//www.theatlantic.com/business/archive/2015/11/syracuse-slums/416892/" data-omni-click="r'article',r'link',r'20',r'492035'">black neighborhoods </a>across the country.</p><figure><picture><img alt="" data-src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/imarisha2/b9db1be9f.jpg" src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/imarisha2/b9db1be9f.jpg"></picture><figcaption>Imarisha says she is often the only black person in Portland establishments. (Alana Semuels / The Atlantic)</figcaption></figure><p dir="ltr">In 1956, voters approved the construction of an arena in the area, which destroyed 476 homes, half of them inhabited by black people, according to “<a href="http://kingneighborhood.org/wp-content/uploads/2015/03/BLEEDING-ALBINA_-A-HISTORY-OF-COMMUNITY-DISINVESTMENT-1940%E2%80%932000.pdf" data-omni-click="r'article',r'link',r'21',r'492035'">Bleeding Albina: A History of Community Disinvestment, 1940-2000,</a>” a paper by the Portland State scholar Karen J. Gibson. This forced many people to move from what was considered “lower Albina” to “upper Albina.” But upper Albina was soon targeted for development, too, first when the Federal Aid Highway Act of 1956 provided funds for Portland to build Interstate 5 and Highway 99. Then a local hospital expansion was approved, clearing 76 acres, including 300 African American-owned homes and businesses and many shops at the junction of North Williams Avenue and Russell Street, the black “Main Street.”</p><p dir="ltr">The urban-renewal efforts made it difficult for black residents to maintain a close-knit community; the institutions that they frequented kept getting displaced. In Portland, according to Gibson, a generation of black people had grown up hearing about the “wicked white people who took away their neighborhoods.” In the meantime, displaced African Americans couldn’t acquire new property or land. Redlining, the process of denying loans to people who lived in certain areas, flourished in Portland in the 1970s and 1980s. An investigation by <a href="http://www.oregonlive.com/portland/index.ssf/2014/08/bank_redlining_creates_bluepri.html" data-omni-click="r'article',r'link',r'22',r'492035'"><em>The Oregonian</em> published in 1990</a> revealed that all the banks in Portland together had made just 10 mortgage loans in a four-census-tract area in the heart of Albina in the course of a year. That was one-tenth the average number of loans in similarly-sized census tracts in the rest of the city. The lack of available capital gave way to scams: A predatory lending institution called Dominion Capital, <em>The Oregonian </em>alleged, also “sold” dilapidated homes to buyers in Albina, though the text of the contracts revealed that Dominion actually kept ownership of the properties, and most of the contracts were structured as balloon mortgages that allowed Dominion to evict buyers shortly after they’d moved in. Other lenders simply refused to give loans on properties worth less than $40,000. (The state's attorney general sued Dominion’s owners after T<em>he Oregonian</em>'s story ran; the AP reported that the parties reached a settlement in 1993 in which Dominion’s owners agreed to pay fines and to limit their business activity in the state. The company filed for bankruptcy a few days after the state lawsuit was filed; U.S. bankruptcy court handed control of the company to a trustee in 1991.)
+    </p>
+    </section>
+
+        <section>
+            <p dir="ltr">The inability of blacks to get mortgages to buy homes in Albina led, once again, to the further decimation of the black community, Gibson argues. Homes were abandoned, and residents couldn’t get mortgages to buy them and fix them up. As more and more houses fell into decay, values plummeted, and those who could left the neighborhood. By the 1980s, the value of homes in Albina reached 58 percent of the city’s median.</p
+            ><p dir="ltr">“In Portland, there is evidence supporting the notion that housing market actors helped sections of the Albina District reach an advanced stage of decay, making the area ripe for reinvestment,” she writes.</p><figure><picture><img alt="" data-src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/AP_968894970820/b7eb7aeec.jpg" src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/AP_968894970820/b7eb7aeec.jpg"></picture><figcaption>Construction in Portland along the Willamette River (Don Ryan / AP)</figcaption></figure><p dir="ltr">By 1988, Albina was a neighborhood known for its housing abandonment, crack-cocaine activity, and gang warfare. Absentee landlordism was rampant, with just 44 percent of homes in the neighborhood owner-occupied.</p><p dir="ltr">It was then, when real estate prices were at rock bottom, that white people moved in and started buying up homes and businesses, kicking off a process that would make Albina one of the more valuable neighborhoods in Portland. The city finally began to invest in Albina then, chasing out absentee landlords and working to redevelop abandoned and foreclosed homes. &nbsp;</p><p dir="ltr">Much of Albina’s African American population would not benefit from this process, though. Some could not afford to pay for upkeep and taxes on their homes when values started to rise again; others who rented slowly saw prices reach levels they could not afford. Even those who owned started to leave; by 1999, blacks owned 36 percent fewer homes than they had a decade earlier, while whites owned 43 percent more.</p><p dir="ltr">This gave rise to racial tensions once again. Black residents felt they had been shouting for decades for better city policy in Albina, but it wasn’t until white residents moved in that the city started to pay attention.</p><p dir="ltr">“We fought like mad to keep crime out of the area,” Gibson quotes one long-time resident, Charles Ford, as saying. “But the newcomers haven’t given us credit for it...We never envisioned the government would come in and mainly assist whites...I didn’t envision that those young people would come in with what I perceived as an attitude. They didn’t come in [saying] ‘We want to be a part of you.’ They came in with this idea, ‘we’re here and we’re in charge’...It’s like the revitalization of racism.”</p></section><section><p>* * *</p><p dir="ltr">Many might think that, as a progressive city known for its hyper-consciousness about its own problems, Portland would be addressing its racial history or at least its current problems with racial inequality and displacement. But Portland only recently became a progressive city, said Millner, the professor, and its past still dominates some parts of government and society.</p><p dir="ltr">Until the 1980s, “Portland was firmly in the hands of the status quo—the old, conservative, scratch-my-back, old-boys white network,” he said. The city had a series of police shootings of black men in the 1970s, and in the 1980s, the police department was investigated after officers <a href="https://news.google.com/newspapers?nid=1891&amp;dat=19810328&amp;id=5Z4fAAAAIBAJ&amp;sjid=-9UEAAAAIBAJ&amp;pg=4247,4641890&amp;hl=en" data-omni-click="r'article',r'link',r'23',r'492035'">ran over possums</a> and then put the dead animals in front of black-owned restaurants.</p><p dir="ltr">Yet as the city became more progressive and “weird,” full of artists and techies and bikers, it did not have a conversation about its racist past. It still tends not to, even as gentrification and displacement continue in Albina and other neighborhoods.</p>
+        <p dir="ltr">“If you were living here and you decided you wanted to have a conversation about race, you'd get the shock of your life,” Ed Washington, the longtime Portland resident, told me. “Because people in Oregon just don't like to talk about it.”</p>
+        <p dir="ltr">The overt racism of the past has abated, residents say, but it can still be uncomfortable to traverse the city as a minority. Paul Knauls, who is African American, moved to Portland to open a nightclub in the 1960s. He used to face the specter of “whites-only” signs in stores, prohibitions on buying real estate and once, even a bomb threat in his jazz club because of its black patrons. Now, he says he notices racial tensions when he walks into a restaurant full of white people and it goes silent, or when he tries to visit friends who once lived in Albina and who have now been displaced to “the numbers,” which is what Portlanders call the low-income far-off neighborhoods on the outskirts of town.</p><p dir="ltr">“Everything is kind of under the carpet,” he said. “The racism is still very, very subtle.”</p>
+        <img class="gem fr-dib fr-draggable" src="ead_gem.jpg" style="width: 87px; height: 120px;"></p>
+        <p dir="ltr">Ignoring the issue of race can mean that the legacies of Oregon’s racial history aren’t addressed. Nicholson, of the Urban League of Portland, says that when the black community has tried to organize meetings on racial issues, community members haven’t been able to fit into the room because “60 white environmental activists” have showed up, too, hoping to speak about something marginally related.</p><figure><picture><img alt="" data-src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/AP_120402124446/5301004df.jpg" src="https://cdn.theatlantic.com/assets/media/img/posts/2016/07/AP_120402124446/5301004df.jpg"></picture><figcaption>Protesters at a ruling about a police shooting in Portland (Rick Bowmer / AP)</figcaption></figure><p dir="ltr">If the city talked about race, though, it might acknowledge that it’s mostly minorities who get displaced and would put in place mechanisms for addressing gentrification, Imarisha said. Instead, said Bates, the city celebrated when, in the early 2000s, census data showed it had a decline in black-white segregation. The reason? Black people in Albina were being displaced to far-off neighborhoods that had traditionally been white.</p><p dir="ltr">One incident captures how residents are failing to hear one another or have any sympathy for one another: In 2014, Trader Joe’s was in negotiations to open a new store in Albina. The Portland Development Commission, the city’s urban-renewal agency, offered the company a <a href="https://www.yahoo.com/news/trader-joe-39-drops-black-neighborhood-store-plan-224732374.html?ref=gs" data-omni-click="r'article',r'link',r'24',r'492035'">steep discount </a>on a patch of land to entice them to seal the deal. But the Portland African American Leadership Forum <a href="https://www.documentcloud.org/documents/929379-paalf-letter-regarding-trader-joes.html" data-omni-click="r'article',r'link',r'25',r'492035'">wrote a letter</a> protesting the development, arguing that the Trader Joe’s was the latest attempt to profit from the displacement of African Americans in the city. By spending money incentivizing Trader Joe’s to locate in the area, the city was creating further gentrification without working to help locals stay in the neighborhood, the group argued. Trader Joe’s pulled out of the plan, and people in Portland and across the country <a href="http://www.thewire.com/national/2014/02/trader-joes-racism-scandal-no-one-talking-about/357969/" data-omni-click="r'article',r'link',r'26',r'492035'">scorned</a> the black community for opposing the retailer.</p><p dir="ltr">Imarisha, Bates, and others say that during that incident, critics of the African American community failed to take into account the history of Albina, which saw black families and businesses displaced again and again when whites wanted to move in. That history was an important and ignored part of the story. “People are like, ‘Why do you bring up this history? It’s gone, it’s in the past, it’s dead.” Imarisha said. “While the mechanisms may have changed, if the outcome is the same, then actually has anything changed? Obviously that ideology of a racist white utopia is still very much in effect.”</p>
+        <p>Talking constructively about race can be hard, especially in a place like Portland where residents have so little exposure to people who look differently than they do. Perhaps as a result, Portland, and indeed Oregon, have failed to come to terms with their ugly past. This isn’t the sole reason for incidents like the alleged racial abuse at Daimler Trucks, or for the threats Imarisha faces when she traverses the state. But it may be part of it.</p></section>
+        </section>
+        <img class="gem fr-dib fr-draggable" src="ead_gem.jpg" style="width: 87px; height: 120px; "></p>
+        <!--- END OF DYNAMIC CONTENT -->
+        <div class = "wide">
+            <h5 class="copyright">Copyright belongs to the publication and to the authors mentioned at the beginning</h5>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

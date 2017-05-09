@@ -1,0 +1,6 @@
+framework module Pods_ead {
+  umbrella header "Pods-ead-umbrella.h"
+
+  export *
+  module * { export * }
+}
