@@ -1,6 +1,6 @@
 # EssayADay
 
-The application's main purpose is to make people read interesting articles every day, simple and fun.
+The application's purpose is to make people read interesting articles every day, simple and fun.
 
 Every time a user starts the application, he/she receives a well picked article from the database. Everything is downloaded using asynchronous server requests, while launching the application.
 
